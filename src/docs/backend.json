@@ -1,0 +1,579 @@
+
+
+{
+  "entities": {
+    "UserProfile": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "UserProfile",
+      "type": "object",
+      "description": "Represents a user profile containing additional information beyond basic auth.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The user's unique ID, matching their Firebase Auth UID."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "username": {
+          "type": "string",
+          "description": "The user's auto-generated login name (e.g., 'ten.araujo')."
+        },
+        "warName": {
+          "type": "string",
+          "description": "The user's military 'war name'."
+        },
+        "rank": {
+          "type": "string",
+          "description": "The user's military rank (Posto/Graduação).",
+          "enum": [
+            "Cel", "TC", "Maj", "Cap", "1º Ten", "2º Ten", "Asp", "ST",
+            "1º Sgt", "2º Sgt", "3º Sgt", "Cb", "Sd"
+          ]
+        },
+        "omId": {
+            "type": "string",
+            "description": "The ID of the Military Organization the user belongs to."
+        },
+        "phoneNumber": {
+            "type": "string",
+            "description": "The user's phone number."
+        },
+        "role": {
+          "type": "string",
+          "description": "The user's role in the system.",
+          "enum": ["ADMIN", "VIEWER"]
+        }
+      },
+      "required": ["id", "email", "username", "warName", "rank", "omId", "role"]
+    },
+    "MilitaryOrganization": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "MilitaryOrganization",
+      "type": "object",
+      "description": "Represents a Military Organization (OM).",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the MilitaryOrganization entity."
+        },
+        "code": {
+          "type": "string",
+          "description": "The code of the Military Organization."
+        },
+        "abbreviation": {
+          "type": "string",
+          "description": "The abbreviation of the Military Organization (e.g., 1º BAC)."
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name of the Military Organization."
+        },
+        "responsibleUserId": {
+          "type": "string",
+          "description": "The ID of the user responsible for this OM."
+        }
+      },
+      "required": [
+        "id",
+        "code",
+        "abbreviation",
+        "name"
+      ]
+    },
+    "LicitationModality": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "LicitationModality",
+      "type": "object",
+      "description": "Represents a licitation modality.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the LicitationModality entity."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the licitation modality (e.g., Pregão, Dispensa, Inexigibilidade)."
+        },
+        "description": {
+          "type": "string",
+          "description": "A description of the licitation modality."
+        },
+        "isCompliance": {
+            "type": "boolean",
+            "description": "Indicates if this modality applies to compliance reports."
+        },
+        "isFinancial": {
+            "type": "boolean",
+            "description": "Indicates if this modality applies to financial reports."
+        },
+        "order": {
+            "type": "number",
+            "description": "The display order of the modality."
+        },
+        "requiresDiexPreq": {
+            "type": "boolean",
+            "description": "If true, DIEx and P_Req fields are required for protocols using this modality."
+        },
+        "requiresPregao": {
+            "type": "boolean",
+            "description": "If true, the Pregão (auction number) field is required."
+        },
+        "requiresSipeo": {
+            "type": "boolean",
+            "description": "If true, the SIPEO Map Number field is required."
+        },
+        "requiresBeneficiary": {
+            "type": "boolean",
+            "description": "If true, the Beneficiary Name field is required."
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "CreditNote": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CreditNote",
+      "type": "object",
+      "description": "Represents a Credit Note (NC).",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the CreditNote entity."
+        },
+        "ncNumber": {
+          "type": "string",
+          "description": "The number of the Credit Note."
+        },
+        "emissionDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The emission date of the Credit Note."
+        },
+        "limitDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The limit date for using the Credit Note."
+        },
+        "uasg": {
+          "type": "string",
+          "description": "The UASG code related to the Credit Note."
+        },
+        "esf": {
+          "type": "string",
+          "description": "Esfera."
+        },
+        "ptres": {
+          "type": "string",
+          "description": "PTRES."
+        },
+        "fonte": {
+          "type": "string",
+          "description": "Fonte."
+        },
+        "nd": {
+          "type": "string",
+          "description": "Natureza da Despesa."
+        },
+        "ugr": {
+          "type": "string",
+          "description": "UGR."
+        },
+        "pi": {
+          "type": "string",
+          "description": "Plano Interno."
+        },
+        "totalValue": {
+          "type": "number",
+          "description": "The total value of the Credit Note."
+        },
+        "balance": {
+          "type": "number",
+          "description": "The available balance of the Credit Note."
+        },
+        "shares": {
+          "type": "array",
+          "description": "A list of credit shares for military organizations.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "omId": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              },
+              "sharedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "sharedBy": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "recollections": {
+            "type": "array",
+            "description": "A list of credit recollections.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "value": { "type": "number" },
+                    "recollectedAt": { "type": "string", "format": "date-time" },
+                    "recollectedBy": { "type": "string" },
+                    "observation": { "type": "string" }
+                }
+            }
+        },
+        "observation": {
+          "type": "string",
+          "description": "General observations about the credit note."
+        },
+        "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of when the document was created."
+        }
+      },
+      "required": [
+        "id",
+        "ncNumber",
+        "emissionDate",
+        "limitDate",
+        "uasg",
+        "totalValue",
+        "balance"
+      ]
+    },
+    "Protocol": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "Protocol",
+      "type": "object",
+      "description": "Represents a Protocol Request (P_Req).",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the Protocol entity."
+        },
+        "controlCode": {
+          "type": "string",
+          "description": "The unique control code for the protocol (e.g., OM-001)."
+        },
+        "entryDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The entry date of the protocol request."
+        },
+        "omId": {
+          "type": "string",
+          "description": "The ID of the requesting Military Organization."
+        },
+        "omComplement": {
+          "type": "string",
+          "description": "Complementary information for the OM."
+        },
+        "diexNumber": {
+          "type": "string",
+          "description": "The DIEx number for the protocol."
+        },
+        "pReqNumber": {
+          "type": "string",
+          "description": "The P_Req number for the protocol."
+        },
+        "sipeoMapNumber": {
+          "type": "string",
+          "description": "The SIPEO Map number, for specific modalities."
+        },
+        "beneficiaryName": {
+            "type": "string",
+            "description": "Name of the beneficiary, for specific modalities."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of protocol.",
+          "enum": ["Empenho", "Reforço"]
+        },
+        "modalityId": {
+          "type": "string",
+          "description": "The ID of the licitation modality."
+        },
+        "pregaoNumber": {
+          "type": "string",
+          "description": "The auction number (Pregão)."
+        },
+        "creditSources": {
+            "type": "array",
+            "description": "List of credit notes and values used for this protocol.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "creditNoteId": { "type": "string" },
+                    "value": { "type": "number" }
+                },
+                "required": ["creditNoteId", "value"]
+            }
+        },
+        "originalProtocolId": {
+            "type": "string",
+            "description": "If the protocol is a 'Reforço', this links to the original 'Empenho' protocol."
+        },
+        "value": {
+          "type": "number",
+          "description": "The total value of the acquisition request, summed from all credit sources."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current status of the protocol.",
+          "enum": ["Em Análise", "Correção", "Deferido", "Restituído", "Empenhado", "Anulado"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the protocol was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of when the protocol was last updated."
+        },
+        "userId": {
+            "type": "string",
+            "description": "The ID of the user who created the protocol."
+        },
+        "commitments": {
+          "type": "array",
+          "description": "A list of commitment notes (empenhos) associated with this protocol.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "neNumber": { "type": "string" },
+              "neDate": { "type": "string", "format": "date-time" },
+              "value": { "type": "number" },
+              "observation": { "type": "string" },
+              "createdAt": { "type": "string", "format": "date-time" },
+              "createdBy": { "type": "string" }
+            },
+            "required": ["neNumber", "neDate", "value", "createdAt", "createdBy"]
+          }
+        },
+        "observations": {
+          "type": "array",
+          "description": "A list of observations about the protocol.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": { "type": "string" },
+              "createdAt": { "type": "string", "format": "date-time" },
+              "userId": { "type": "string" }
+            },
+            "required": ["text", "createdAt", "userId"]
+          }
+        }
+      },
+      "required": [
+        "id",
+        "entryDate",
+        "omId",
+        "type",
+        "modalityId",
+        "creditSources",
+        "value",
+        "status",
+        "createdAt",
+        "userId"
+      ]
+    },
+    "CancellationLog": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "CancellationLog",
+      "type": "object",
+      "description": "Represents a historical log for a cancelled commitment (NE).",
+      "properties": {
+        "id": { "type": "string", "description": "Unique ID for the log entry." },
+        "omId": { "type": "string", "description": "ID of the Military Organization." },
+        "uasg": { "type": "string", "description": "The UASG code related to the cancellation." },
+        "diexNumber": { "type": "string", "description": "The DIEx number for the cancellation request." },
+        "neNumber": { "type": "string", "description": "The number of the cancelled commitment note." },
+        "value": { "type": "number", "description": "The value of the cancellation." },
+        "observation": { "type": "string", "description": "Reason or details for the cancellation." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of when the log was created." },
+        "createdBy": { "type": "string", "description": "ID of the user who created the log." }
+      },
+      "required": ["id", "omId", "uasg", "diexNumber", "neNumber", "value", "observation", "createdAt", "createdBy"]
+    },
+    "ComplianceReport": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "title": "ComplianceReport",
+        "type": "object",
+        "description": "Represents a generated compliance or financial report.",
+        "properties": {
+            "id": { "type": "string", "description": "Unique ID for the report." },
+            "controlNumber": { "type": "string", "description": "Sequential control number (e.g., REL-001/2024)." },
+            "year": { "type": "number", "description": "The year the report was generated." },
+            "sequence": { "type": "number", "description": "The sequence number for that year." },
+            "generatedAt": { "type": "string", "format": "date-time", "description": "Timestamp of when the report was generated." },
+            "generatedBy": { "type": "string", "description": "ID of the user who generated the report." },
+            "protocolIds": { "type": "array", "description": "List of protocol IDs included in the report.", "items": { "type": "string" } },
+            "commitmentNumbers": { "type": "array", "description": "List of specific commitment numbers (NEs) included in the report.", "items": { "type": "string" } },
+            "uasg": { "type": "string", "description": "The UASG for which the report was generated." },
+            "type": { "type": "string", "description": "The type of report.", "enum": ["COMPLIANCE", "FINANCIAL"]}
+        },
+        "required": ["id", "controlNumber", "year", "sequence", "generatedAt", "generatedBy", "protocolIds", "uasg", "type"]
+    },
+     "AppSettings": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "AppSettings",
+      "type": "object",
+      "description": "Stores global settings for the application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Should always be 'global' for this singleton document."
+        },
+        "ncAlertDays": {
+          "type": "object",
+          "description": "Settings for Credit Note expiration alerts.",
+          "properties": {
+            "warning": {
+              "type": "number",
+              "description": "Days before expiration to show a warning alert."
+            },
+            "critical": {
+              "type": "number",
+              "description": "Days before expiration to show a critical alert."
+            }
+          }
+        }
+      }
+    }
+  },
+  "auth": {
+    "providers": [
+      "password"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "UserProfile",
+          "schema": { "$ref": "#/backend/entities/UserProfile" },
+          "description": "Stores user profile information.",
+          "params": [{
+            "name": "userId",
+            "description": "The unique identifier of the user, corresponding to their Firebase Auth UID."
+          }]
+        }
+      },
+      {
+        "path": "/militaryOrganizations/{militaryOrganizationId}",
+        "definition": {
+          "entityName": "MilitaryOrganization",
+          "schema": {
+            "$ref": "#/backend/entities/MilitaryOrganization"
+          },
+          "description": "Stores military organization data.",
+          "params": [
+            {
+              "name": "militaryOrganizationId",
+              "description": "The unique identifier of the military organization."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/licitationModalities/{licitationModalityId}",
+        "definition": {
+          "entityName": "LicitationModality",
+          "schema": {
+            "$ref": "#/backend/entities/LicitationModality"
+          },
+          "description": "Stores licitation modalities.",
+          "params": [
+            {
+              "name": "licitationModalityId",
+              "description": "The unique identifier of the licitation modality."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/creditNotes/{creditNoteId}",
+        "definition": {
+            "entityName": "CreditNote",
+            "schema": { "$ref": "#/backend/entities/CreditNote" },
+            "description": "Stores credit note data.",
+            "params": [
+                {
+                    "name": "creditNoteId",
+                    "description": "The unique identifier of the credit note."
+                }
+            ]
+        }
+      },
+      {
+        "path": "/protocols/{protocolId}",
+        "definition": {
+            "entityName": "Protocol",
+            "schema": { "$ref": "#/backend/entities/Protocol" },
+            "description": "Stores protocol request data.",
+            "params": [
+                {
+                    "name": "protocolId",
+                    "description": "The unique identifier of the protocol."
+                }
+            ]
+        }
+      },
+      {
+        "path": "/cancellationLogs/{logId}",
+        "definition": {
+            "entityName": "CancellationLog",
+            "schema": { "$ref": "#/backend/entities/CancellationLog" },
+            "description": "Stores historical logs of cancelled commitments from previous fiscal years.",
+            "params": [
+                {
+                    "name": "logId",
+                    "description": "The unique identifier of the cancellation log."
+                }
+            ]
+        }
+      },
+      {
+          "path": "/complianceReports/{reportId}",
+          "definition": {
+              "entityName": "ComplianceReport",
+              "schema": { "$ref": "#/backend/entities/ComplianceReport" },
+              "description": "Stores generated compliance reports.",
+              "params": [
+                  {
+                      "name": "reportId",
+                      "description": "The unique identifier of the compliance report."
+                  }
+              ]
+          }
+      },
+      {
+        "path": "/settings/{settingsId}",
+        "definition": {
+            "entityName": "AppSettings",
+            "schema": { "$ref": "#/backend/entities/AppSettings" },
+            "description": "Stores global application settings. Only one document with id 'global' should exist.",
+            "params": [
+                {
+                    "name": "settingsId",
+                    "description": "The ID of the settings document, should be 'global'."
+                }
+            ]
+        }
+      }
+    ],
+    "reasoning": "The user entity and collections have been removed to simplify the application and remove the user management system. All other collections remain as they are central to the app's functionality."
+  }
+}

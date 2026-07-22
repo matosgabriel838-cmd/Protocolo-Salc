@@ -1,0 +1,88 @@
+
+
+@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+.print-container {
+    padding: 1.5cm; /* Standard print margin */
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 10pt;
+    width: 100%;
+    min-height: 29.7cm; /* A4 height */
+    margin: 0 auto;
+    background-color: white;
+}
+    
+.print-header,
+.print-header p {
+    font-size: 10pt;
+    line-height: 1.2;
+}
+
+.print-header p.font-bold {
+    font-weight: bold;
+}
+
+h1 {
+    font-size: 12pt;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    page-break-inside: auto;
+}
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+th, td {
+    border: 1px solid #000;
+    padding: 4px 6px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+thead {
+    display: table-header-group; /* Ensure header repeats on each page */
+}
+tbody {
+    display: table-row-group;
+}
+
+.print-footer {
+    text-align: center;
+    font-size: 10pt;
+    margin-top: 5rem;
+    page-break-inside: avoid;
+}
+
+.signature-line p {
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Screen styles for preview */
+@media screen {
+    .print-container-wrapper {
+        background-color: #f0f0f0;
+        padding: 2rem;
+    }
+    .print-container {
+        max-width: 21cm; /* A4 width */
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .print-footer {
+        margin-top: 80px;
+        text-align: center;
+    }
+     .print-header p.font-bold {
+        font-weight: bold;
+    }
+}

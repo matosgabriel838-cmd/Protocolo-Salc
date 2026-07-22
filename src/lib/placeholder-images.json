@@ -1,0 +1,28 @@
+{
+  "placeholderImages": [
+    {
+      "id": "user-avatar",
+      "description": "Placeholder for user avatar",
+      "imageUrl": "https://images.unsplash.com/photo-1725028748781-7adb1df9a943?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwZXJzb24lMjBmYWNlfGVufDB8fHx8MTc2NTI3ODAwOXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "person face"
+    },
+    {
+      "id": "badm-logo",
+      "description": "Logo da Base Administrativa",
+      "imageUrl": "/b_adm.png",
+      "imageHint": "military logo"
+    },
+    {
+      "id": "copesp-logo",
+      "description": "Logo do COPESP",
+      "imageUrl": "/copesp.png",
+      "imageHint": "special forces logo"
+    },
+    {
+      "id": "brasao-nacional",
+      "description": "Brasão da República Federativa do Brasil",
+      "imageUrl": "/brasao.png",
+      "imageHint": "national emblem"
+    }
+  ]
+}

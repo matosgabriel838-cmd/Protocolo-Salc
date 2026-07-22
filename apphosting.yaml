@@ -1,0 +1,29 @@
+# Settings to manage and configure a Firebase App Hosting backend.
+# https://firebase.google.com/docs/app-hosting/configure
+
+buildConfig:
+  runtime: nodejs20
+
+runConfig:
+  # Increase this value if you'd like to automatically spin up
+  # more instances in response to increased traffic.
+  maxInstances: 1
+# Pass secrets from Cloud Secret Manager to your app.
+# secrets:
+#   - SECRET_NAME
+# Pass environment variables to your app.
+env:
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: "AIzaSyCrp2F7-ffSevx5Mr7pJGQPU6Rg43iwafs"
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: "studio-6744242716-b6b1c.firebaseapp.com"
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: "studio-6744242716-b6b1c"
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: "studio-6744242716-b6b1c.appspot.com"
+  - variable: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+    value: "303318052898"
+  - variable: NEXT_PUBLIC_FIREBASE_APP_ID
+    value: "1:303318052898:web:47894adbfa15acbfb49a7b"
+  - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+    value: "G-6VRVQGWJBJ"

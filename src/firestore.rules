@@ -1,0 +1,11 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow read/write access to any authenticated user across the entire database.
+    // This rule is simplified to grant full access, as per the new requirements.
+    match /{path=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
