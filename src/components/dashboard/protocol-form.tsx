@@ -87,25 +87,59 @@ export function ProtocolForm({ setOpen, creditNotes, oms, modalities, protocols,
   const form = useForm<any>({
     resolver: async (data, context, options) => {
         const currentModality = modalities.find(m => m.id === (data as any).modalityId);
-        let schema = baseProtocolSchema;
-        if (currentModality) {
-            if (currentModality.requiresDiexPreq) {
-                schema = schema.extend({
-                    diexNumber: z.string().min(1, "DIEx obrigatório."),
-                    pReqNumber: z.string().min(1, "P_Req obrigatório."),
-                });
-            }
-            if (currentModality.requiresPregao) {
-                 schema = schema.extend({ pregaoNumber: z.string().min(1, "Pregão obrigatório.") });
-            }
-             if (currentModality.requiresSipeo) {
-                 schema = schema.extend({ sipeoMapNumber: z.string().min(1, "Mapa SIPEO obrigatório.") });
-            }
-            if (currentModality.requiresBeneficiary) {
-                 schema = schema.extend({ beneficiaryName: z.string().min(1, "Beneficiário obrigatório.") });
-            }
+      const schema = baseProtocolSchema.superRefine((values, ctx) => {
+    if (!currentModality) return;
+
+    if (currentModality.requiresDiexPreq) {
+        if (!values.diexNumber?.trim()) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["diexNumber"],
+                message: "DIEx obrigatório.",
+            });
         }
-        return zodResolver(schema)(data, context, options);
+
+        if (!values.pReqNumber?.trim()) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["pReqNumber"],
+                message: "P_Req obrigatório.",
+            });
+        }
+    }
+
+    if (currentModality.requiresPregao) {
+        if (!values.pregaoNumber?.trim()) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["pregaoNumber"],
+                message: "Pregão obrigatório.",
+            });
+        }
+    }
+
+    if (currentModality.requiresSipeo) {
+        if (!values.sipeoMapNumber?.trim()) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["sipeoMapNumber"],
+                message: "Mapa SIPEO obrigatório.",
+            });
+        }
+    }
+
+    if (currentModality.requiresBeneficiary) {
+        if (!values.beneficiaryName?.trim()) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                path: ["beneficiaryName"],
+                message: "Beneficiário obrigatório.",
+            });
+        }
+    }
+});
+
+return zodResolver(schema)(data, context, options);
     },
     defaultValues: isEditing && protocol ? { 
         ...protocol, 
