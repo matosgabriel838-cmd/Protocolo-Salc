@@ -303,10 +303,8 @@ return zodResolver(schema)(data, context, options);
 
             const oldSources = oldData.creditSources;
             const newSources = sanitizedData.creditSources;
-            const allNcIds = Array.from(new Set([
-                ...oldSources.map(s => s.creditNoteId),
-                ...newSources.map(s => s.creditNoteId)
-            ]));
+          oldSources.map((s: CreditSource) => s.creditNoteId)
+newSources.map((s: CreditSource) => s.creditNoteId)
 
             const ncDocs = await Promise.all(allNcIds.map(id => transaction.get(doc(firestore, "creditNotes", id))));
             const ncMap = new Map<string, CreditNote>();
